@@ -1,6 +1,7 @@
 import CardArrow from "@/assets/svg/cardArrow";
 import HomeButton from "@/components/button";
-import DashboardTable from "@/features/dashboard/table";
+import UserManagementTable from "@/features/user-management/table";
+
 import React from "react";
 
 const CardDetails = [
@@ -36,17 +37,18 @@ const CardDetails = [
   },
 ];
 
-const Dashbaord = () => {
+const UserManagement = () => {
   return (
     <div>
       <div className="flex items-center justify-between">
-        <h1 className="text-[28px] text-[#292D32] font-medium"> Dashboard</h1>
+        <h1 className="text-[28px] text-[#292D32] font-medium"> User Management</h1>
         <HomeButton
           title={"Add New User"}
           type={"submit"}
-          bg={"#3F6FB9"}
+          bg={"#ffffff"}
           width={"135px"}
           height={"40px"}
+          color="#292D32"
         />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-2 my-10">
@@ -81,9 +83,9 @@ const Dashbaord = () => {
           </div>
         ))}
       </div>
-      <DashboardTable />
+      <UserManagementTable />
     </div>
   );
 };
 
-export default Dashbaord;
+export default UserManagement;

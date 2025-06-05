@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import HomeInput from "../input";
+import NotificationIcon from "@/assets/svg/notification";
 
 const Header = ({
   title,
@@ -44,7 +45,7 @@ const Header = ({
   };
 
   return (
-    <div className=" w-full border-b border-b-[#D9D9D9] py-7 flex items-center justify-between  relative">
+    <div className=" w-full  py-5 flex items-center justify-between  relative">
       {/* Hamburger Menu (Mobile) */}
       <div className="lg:hidden cursor-pointer" onClick={() => setIsOpen(true)}>
         Menu
@@ -55,7 +56,15 @@ const Header = ({
       </h3>
 
       <div className="flex items-center gap-6 relative">
-        <HomeInput type={"text"} placeholder={"Search anything..."} height={'40px'} borderRadius="40px" border="1px #6F6F6F solid" boxShadow="10px"/>
+        <HomeInput type={"text"} placeholder={"Search anything..."} height={'40px'} borderRadius="40px" border="1px #F6F5F5 solid" boxShadow="10px"/>
+        <NotificationIcon/>
+        <div  className="flex items-center gap-3 cursor-pointer">
+         <div>
+           <h1 className='text-[14px] text-[#292D32] font-bold'>Lola </h1>
+           <p className='text-[10px] text-[#6F6F6F]'> Admin</p>
+         </div>
+         <div className='w-[40px] h-[40px] bg-gray-400 rounded-full'></div>
+        </div>
       </div>
     </div>
   );

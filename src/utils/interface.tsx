@@ -22,3 +22,17 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   boxShadow?: string;
   onKeyPress?: React.KeyboardEventHandler<HTMLInputElement>;
 }
+
+export interface ButtonProps {
+  title: string;
+  onClick?: () => void;
+  type: 'submit' | 'reset' | 'button';
+  disabled?: boolean;
+  className?: string;
+  bg: string;
+  width: string;
+  color?: string;
+  height:string;
+  borderRadius?:string;
+  border?: string;
+}
