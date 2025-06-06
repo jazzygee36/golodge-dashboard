@@ -1,15 +1,15 @@
 import HomeButton from "@/components/button";
 import React from "react";
 
-const DeleteProfile = () => {
+const DeleteProperties = () => {
   return (
     <div className="mt-7">
       <p className="text-[14px] text-[#050505]/[0.70] text-center">
-      You’re about to deactivate this user account. Are you sure you want to deactivate these account ?
+      You’re about to delete this properties. Are you sure you want to delete these properties ?
       </p>
       <div className="gap-4 flex items-center justify-center mt-4">
         <HomeButton
-          title={"Delete"}
+          title={"Delete "}
           type={"submit"}
           bg={"#EF0808"}
           width={"129px"}
@@ -31,4 +31,4 @@ const DeleteProfile = () => {
   );
 };
 
-export default DeleteProfile;
+export default DeleteProperties;

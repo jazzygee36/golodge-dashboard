@@ -5,7 +5,7 @@ const DeleteProfile = () => {
   return (
     <div className="mt-7">
       <p className="text-[14px] text-[#050505]/[0.70] text-center">
-      You’re about to deactivate this user account. Are you sure you want to deactivate these account ?
+     You’re about to delete this users. Are you sure you want to delete these accounts ?
       </p>
       <div className="gap-4 flex items-center justify-center mt-4">
         <HomeButton

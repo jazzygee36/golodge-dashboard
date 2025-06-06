@@ -142,7 +142,10 @@ const UserManagementTable = () => {
                   </td>
                   <td className="py-4 px-4">{item.id}</td>
                   <td className="py-4 px-4">{item.userType}</td>
-                  <td className="py-4 px-4">{item.name}</td>
+                   <td className="py-4 px-4 flex gap-2 items-center">
+                    <div className="w-[20px] h-[20px] bg-[#EAEAEA] rounded-full"></div>
+                    {item.name}
+                  </td>
                   <td className="py-4 px-4">{item.email}</td>
                   <td className="py-4 px-4">{item.dateOfReg}</td>
                   <td className="py-4 px-4 m-auto ">

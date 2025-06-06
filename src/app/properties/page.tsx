@@ -1,9 +1,9 @@
+
+// import BookingsTable from "@/features/bookings/table";
+
 import CardArrow from "@/assets/svg/cardArrow";
 import HomeButton from "@/components/button";
-import FinancialRecordTable from "@/features/financial-records/table";
-
-
-import React from "react";
+import PropertiesTable from "@/features/properties/table";
 
 const CardDetails = [
   {
@@ -38,21 +38,31 @@ const CardDetails = [
   },
 ];
 
-const FinancialRecords = () => {
+
+const Properties = () => {
   return (
     <div>
-      <div className="flex items-center justify-between">
-        <h1 className="text-[28px] text-[#292D32] font-medium"> Financial Records</h1>
+      
+
+    <div className="flex items-center justify-between">
+        <div className="">
+        <h1 className="text-[28px] text-[#292D32] font-medium">
+          {" "}
+          Properties
+        </h1>
+        <p className="text-[14px] text-[#6F6F6F]">
+          Here is a extended details of all properties so far!
+        </p>
+      </div>
         <HomeButton
-          title={"View New Payment"}
+          title={"Add Property"}
           type={"submit"}
           bg={"#3F6FB9"}
           width={"135px"}
           height={"40px"}
-          color="#fff"
         />
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-2 my-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-2 my-5">
         {CardDetails.map((item, index) => (
           <div key={index} className="bg-white p-4 rounded-lg shadow-md">
             <div className="flex items-center justify-between">
@@ -84,9 +94,9 @@ const FinancialRecords = () => {
           </div>
         ))}
       </div>
-      <FinancialRecordTable />
+      <PropertiesTable/>
     </div>
   );
 };
 
-export default FinancialRecords;
+export default Properties;

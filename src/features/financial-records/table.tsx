@@ -3,10 +3,10 @@ import DeleteIcon from "@/assets/svg/delete";
 import EditIcon from "@/assets/svg/edit";
 import Modal from "@/components/modal";
 import React, { useEffect, useState, useRef } from "react";
-import DashboardProfile from "./profile";
-import ResetPassword from "./reset-password";
-import DeleteProfile from "./delete";
+
 import DeactivateAccount from "./deactivate";
+import DeleteProfile from "./delete";
+import HomeButton from "@/components/button";
 
 const originalData = [
   {
@@ -14,18 +14,22 @@ const originalData = [
     userType: "Property Account",
     name: "Linda Foreman",
     email: "Linda@mail.com",
-    dateOfReg: "22-05-2024",
-    Status: "Active",
+    dateOfPayment: "22-05-2024",
+    Status: "Received",
     action: "View",
+    paymentType: "Apartment Booking",
+    amountPaid: "$450.00",
   },
   {
     id: "202343",
     userType: "Property Account",
     name: "John Doe",
     email: "john@mail.com",
-    dateOfReg: "21-04-2024",
-    Status: "Non-Active",
+    dateOfPayment: "21-04-2024",
+    amountPaid: "$450.00",
+    Status: "Pending",
     action: "View",
+    paymentType: "Apartment Booking",
   },
 ];
 
@@ -37,19 +41,18 @@ const TableData = Array.from({ length: 5 }).flatMap((_, i) =>
 );
 
 const statusStyles: Record<string, string> = {
-  Active:
+  Received:
     "bg-green-100 text-[#292D32] border border-green-300 rounded-lg inline-block px-3 py-[5px] text-xs",
-  "Non-Active":
+  Pending:
     "bg-[#FFA500]/[0.20] text-[#292D32] border border-[#FFA500] rounded-lg  inline-block px-3 py-[5px] text-xs",
 };
 
-const DashboardTable = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isModalOpenReset, setIsModalOpenReset] = useState(false);
-  const [isModalOpenDelete, setIsModalOpenDelete] = useState(false);
+const FinancialRecordTable = () => {
   const [isModalOpenDeactivate, setIsModalOpenDeactivate] = useState(false);
+  const [isModalOpenDelete, setIsModalOpenDelete] = useState(false);
   const [openDropdownId, setOpenDropdownId] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -74,15 +77,42 @@ const DashboardTable = () => {
         <div className="flex items-center justify-between mb-1">
           <div>
             <h1 className="text-[18px] font-medium text-[#151515]">
-              All Registered Users
+              Financial Records
             </h1>
-            <span className="text-[8px] font-medium text-[#707070]">
-              Sort by
-            </span>
           </div>
           <h1 className="text-[#3F6FB9] text-[10px] underline cursor-pointer">
-            See More
+            {selectedIds.length < 1 ? "Select" : <div>Unselect</div>}
           </h1>
+        </div>
+        <div className="flex justify-between items-center mb-2">
+          <span className="text-[8px] font-medium text-[#707070]">Sort by</span>
+
+          {selectedIds.length > 0 && (
+            <div className="flex gap-2">
+              <HomeButton
+                title={"Deactivate All"}
+                type={"reset"}
+                bg={""}
+                width={"128px"}
+                height={"32px"}
+                border="1px solid #F2F3F7"
+                borderRadius="20px"
+                color="#292D32"
+                onClick={() => setIsModalOpenDeactivate(true)}
+              />
+              <HomeButton
+                title={"Delete All"}
+                type={"reset"}
+                bg={""}
+                width={"128px"}
+                color="#292D32"
+                height={"32px"}
+                border="1px solid  #F2F3F7"
+                borderRadius="20px"
+                onClick={() => setIsModalOpenDelete(true)}
+              />
+            </div>
+          )}
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
@@ -90,10 +120,11 @@ const DashboardTable = () => {
               <tr>
                 <th className="py-3 px-4"></th>
                 <th className="py-3 px-4">IdNo</th>
-                <th className="py-3 px-4">User Type</th>
+                <th className="py-3 px-4">Payment Type</th>
                 <th className="py-3 px-4">Name</th>
                 <th className="py-3 px-4">Email Address</th>
-                <th className="py-3 px-4">Date of Registration</th>
+                <th className="py-3 px-4">Amount Paid</th>
+                <th className="py-3 px-4">Date of Payment</th>
                 <th className="py-3 px-4">Status</th>
                 <th className="py-3 px-4">Action</th>
               </tr>
@@ -102,16 +133,29 @@ const DashboardTable = () => {
               {TableData.map((item, index) => (
                 <tr key={item.id} className="hover:bg-gray-100">
                   <td className="py-4 px-4">
-                    <input type="checkbox" />
+                    <input
+                      type="checkbox"
+                      checked={selectedIds.includes(item.id)}
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          setSelectedIds((prev) => [...prev, item.id]);
+                        } else {
+                          setSelectedIds((prev) =>
+                            prev.filter((id) => id !== item.id)
+                          );
+                        }
+                      }}
+                    />
                   </td>
                   <td className="py-4 px-4">{item.id}</td>
-                  <td className="py-4 px-4">{item.userType}</td>
+                  <td className="py-4 px-4">{item.paymentType}</td>
                   <td className="py-4 px-4 flex gap-2 items-center">
                     <div className="w-[20px] h-[20px] bg-[#EAEAEA] rounded-full"></div>
                     {item.name}
                   </td>
                   <td className="py-4 px-4">{item.email}</td>
-                  <td className="py-4 px-4">{item.dateOfReg}</td>
+                  <td className="py-4 px-4">{item.amountPaid}</td>
+                  <td className="py-4 px-4">{item.dateOfPayment}</td>
                   <td className="py-4 px-4 m-auto ">
                     <span
                       className={statusStyles[item.Status] || "bg-gray-100"}
@@ -129,7 +173,10 @@ const DashboardTable = () => {
                       >
                         <EditIcon />
                       </div>
-                      <div onClick={() => setIsModalOpenDelete(true)}>
+                      <div
+                        onClick={() => setIsModalOpenDelete(true)}
+                        className="cursor-pointer"
+                      >
                         <DeleteIcon />
                       </div>
                       {openDropdownId === item.id && (
@@ -140,22 +187,16 @@ const DashboardTable = () => {
                           <ul className="py-1">
                             <li
                               className="px-4 py-3 hover:bg-gray-100 cursor-pointer"
-                              onClick={() => setIsModalOpen(true)}
+                              // onClick={() => setIsModalOpenDeactivate(true)}
                             >
-                              View profile
+                              View payment details
                             </li>
-                            <li
-                              className="px-4 py-3 hover:bg-gray-100 cursor-pointer"
-                              onClick={() => setIsModalOpenReset(true)}
+                            {/* <li className="px-4 py-3 hover:bg-gray-100 cursor-pointer"
+                              onClick={() => setIsModalOpenDelete(true)}
+                            
                             >
-                              Reset User Password
-                            </li>
-                            <li
-                              className="px-4 py-3 hover:bg-gray-100 cursor-pointer"
-                              onClick={() => setIsModalOpenDeactivate(true)}
-                            >
-                              Deactivate Account
-                            </li>
+                              Delete Account
+                            </li> */}
                           </ul>
                         </div>
                       )}
@@ -201,21 +242,14 @@ const DashboardTable = () => {
           </button>
         </div>
       </div>
+
       <Modal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        title="Profile"
+        isOpen={isModalOpenDeactivate}
+        onClose={() => setIsModalOpenDeactivate(false)}
+        title="Deactivate Account"
         showCloseIcon={true}
       >
-        <DashboardProfile />
-      </Modal>
-      <Modal
-        isOpen={isModalOpenReset}
-        onClose={() => setIsModalOpenReset(false)}
-        title="Reset User Password"
-        showCloseIcon={true}
-      >
-        <ResetPassword />
+        <DeactivateAccount />
       </Modal>
       <Modal
         isOpen={isModalOpenDelete}
@@ -225,16 +259,8 @@ const DashboardTable = () => {
       >
         <DeleteProfile />
       </Modal>
-      <Modal
-        isOpen={isModalOpenDeactivate}
-        onClose={() => setIsModalOpenDeactivate(false)}
-        title="Deactivate Account"
-        showCloseIcon={true}
-      >
-        <DeactivateAccount />
-      </Modal>
     </>
   );
 };
 
-export default DashboardTable;
+export default FinancialRecordTable;

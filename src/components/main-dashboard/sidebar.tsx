@@ -17,8 +17,9 @@ const Links = [
   { name: "Dashboard", icon: DashboardIcon, path: "/dashboard" },
   { name: "User Management", icon: ManagementIcon, path: "/user-management" },
   { name: "Booking Details", icon: BookingsIcon, path: "/bookings" },
-  { name: "Units", icon: UnitsIcon, path: "/units" },
-  { name: "Managers", icon: ManagersIcon, path: "/managers" },
+  { name: "Properties", icon: UnitsIcon, path: "/properties" },
+  { name: "Renters", icon: ManagersIcon, path: "/renters" },
+  // { name: "Managers", icon: ManagersIcon, path: "/managers" },
   { name: "Financial Records", icon: FinancialRecordsIcon, path: "/financial-records" },
   { name: "Settings", icon: SettingsIcon, path: "/settings" },
 ];
@@ -54,7 +55,7 @@ const Sidebar = ({
       )}
       {/* Sidebar Container */}
       <div
-        className={`pl-3 md:pl-[30px] lg:pl-[40px] fixed lg:static top-0 left-0 h-full  w-[60%] md:w-[30%] lg:w-[19%] bg-[#ffffff]  transition-transform duration-300 ease-in-out z-20
+        className={`pl-3 md:pl-[30px] lg:pl-[30px] fixed lg:static top-0 left-0 h-full   w-[60%] md:w-[30%] lg:w-[19%] bg-white  transition-transform duration-300 ease-in-out z-20
         ${isOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0`}
       >
         {/* Logo & Close Button */}

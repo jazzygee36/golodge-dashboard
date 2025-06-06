@@ -1,30 +1,48 @@
 "use client";
-import DeleteIcon from "@/assets/svg/delete";
+
 import EditIcon from "@/assets/svg/edit";
 import Modal from "@/components/modal";
 import React, { useEffect, useState, useRef } from "react";
-import DashboardProfile from "./profile";
-import ResetPassword from "./reset-password";
-import DeleteProfile from "./delete";
-import DeactivateAccount from "./deactivate";
+
+import HomeButton from "@/components/button";
+
+import DeactivateProperties from "./deactivate";
+import DeleteProperties from "./delete";
+import ManagerProfile from "./manager-profile";
 
 const originalData = [
   {
     id: "202342",
-    userType: "Property Account",
+    userType: "2 Bedroom",
     name: "Linda Foreman",
-    email: "Linda@mail.com",
-    dateOfReg: "22-05-2024",
-    Status: "Active",
+    propertyName: " Whispering Rakes",
+
+    location: "Lagos, Nigeria",
+    noOfBookings: "2,345",
+
+    Status: "Fully Booked",
     action: "View",
   },
   {
     id: "202343",
-    userType: "Property Account",
+    userType: "duplex",
     name: "John Doe",
-    email: "john@mail.com",
-    dateOfReg: "21-04-2024",
-    Status: "Non-Active",
+    propertyName: " Whispering Rakes",
+    location: "Lagos, Nigeria",
+    noOfBookings: "2,345",
+
+    Status: "Vacant",
+    action: "View",
+  },
+  {
+    id: "202343",
+    userType: "duplex",
+    name: "John Doe",
+    propertyName: " Whispering Rakes",
+    location: "Lagos, Nigeria",
+    noOfBookings: "2,345",
+
+    Status: "Available",
     action: "View",
   },
 ];
@@ -37,19 +55,22 @@ const TableData = Array.from({ length: 5 }).flatMap((_, i) =>
 );
 
 const statusStyles: Record<string, string> = {
-  Active:
-    "bg-green-100 text-[#292D32] border border-green-300 rounded-lg inline-block px-3 py-[5px] text-xs",
-  "Non-Active":
-    "bg-[#FFA500]/[0.20] text-[#292D32] border border-[#FFA500] rounded-lg  inline-block px-3 py-[5px] text-xs",
+  "Fully Booked":
+    "bg-green-100 text-[#292D32] border border-green-300 rounded-lg inline-block px-3 py-[5px] text-[10px]",
+  Vacant:
+    "bg-[#EF0808]/[0.20] text-[#292D32] border border-[#FFA500] rounded-lg  inline-block px-3 py-[5px] text-[10px]",
+  Available:
+    "bg-[#FFA500]/[0.20] text-[#292D32] border border-[#FFA500] rounded-lg  inline-block px-3 py-[5px] text-[10px]",
 };
 
-const DashboardTable = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isModalOpenReset, setIsModalOpenReset] = useState(false);
+const PropertiesTable = () => {
   const [isModalOpenDelete, setIsModalOpenDelete] = useState(false);
-  const [isModalOpenDeactivate, setIsModalOpenDeactivate] = useState(false);
+  const [isModalOpenManagerProfile, setIsModalOpenManagerProfile] = useState(false);
+  const [isModalOpenDeactivateProperties, setIsModalOpenDeactivateProperties] =
+    useState(false);
   const [openDropdownId, setOpenDropdownId] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -70,19 +91,50 @@ const DashboardTable = () => {
   };
   return (
     <>
-      <div className="bg-white px-5 py-4">
+      <div className="bg-white px-5 py-4 mt-[32px]">
         <div className="flex items-center justify-between mb-1">
           <div>
             <h1 className="text-[18px] font-medium text-[#151515]">
-              All Registered Users
+              All Properties
             </h1>
-            <span className="text-[8px] font-medium text-[#707070]">
-              Sort by
-            </span>
           </div>
           <h1 className="text-[#3F6FB9] text-[10px] underline cursor-pointer">
-            See More
+            {selectedIds.length < 1 ? (
+              "Select"
+            ) : (
+              <div onClick={() => setSelectedIds([])}>Unselect</div>
+            )}
           </h1>
+        </div>
+        <div className="flex justify-between items-center mb-2">
+          <span className="text-[8px] font-medium text-[#707070]">Sort by</span>
+
+          {selectedIds.length > 0 && (
+            <div className="flex gap-2">
+              <HomeButton
+                title={"Deactivate All"}
+                type={"reset"}
+                bg={""}
+                width={"128px"}
+                height={"32px"}
+                border="1px solid #F2F3F7"
+                borderRadius="20px"
+                color="#292D32"
+                onClick={() => setIsModalOpenDeactivateProperties(true)}
+              />
+              <HomeButton
+                title={"Delete All"}
+                type={"reset"}
+                bg={""}
+                width={"128px"}
+                color="#292D32"
+                height={"32px"}
+                border="1px solid  #F2F3F7"
+                borderRadius="20px"
+                onClick={() => setIsModalOpenDelete(true)}
+              />
+            </div>
+          )}
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
@@ -90,10 +142,14 @@ const DashboardTable = () => {
               <tr>
                 <th className="py-3 px-4"></th>
                 <th className="py-3 px-4">IdNo</th>
-                <th className="py-3 px-4">User Type</th>
-                <th className="py-3 px-4">Name</th>
-                <th className="py-3 px-4">Email Address</th>
-                <th className="py-3 px-4">Date of Registration</th>
+                <th className="py-3 px-4">Property Name</th>
+                <th className="py-3 px-4">Type</th>
+
+                <th className="py-3 px-4">Location</th>
+
+                <th className="py-3 px-4">Property Manager</th>
+                <th className="py-3 px-4">No of bookings</th>
+
                 <th className="py-3 px-4">Status</th>
                 <th className="py-3 px-4">Action</th>
               </tr>
@@ -102,16 +158,33 @@ const DashboardTable = () => {
               {TableData.map((item, index) => (
                 <tr key={item.id} className="hover:bg-gray-100">
                   <td className="py-4 px-4">
-                    <input type="checkbox" />
+                    <input
+                      type="checkbox"
+                      checked={selectedIds.includes(item.id)}
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          setSelectedIds((prev) => [...prev, item.id]);
+                        } else {
+                          setSelectedIds((prev) =>
+                            prev.filter((id) => id !== item.id)
+                          );
+                        }
+                      }}
+                    />
                   </td>
                   <td className="py-4 px-4">{item.id}</td>
+
+                  <td className="py-4 px-4">{item.propertyName}</td>
                   <td className="py-4 px-4">{item.userType}</td>
+
+                  <td className="py-4 px-4">{item.location}</td>
                   <td className="py-4 px-4 flex gap-2 items-center">
                     <div className="w-[20px] h-[20px] bg-[#EAEAEA] rounded-full"></div>
                     {item.name}
                   </td>
-                  <td className="py-4 px-4">{item.email}</td>
-                  <td className="py-4 px-4">{item.dateOfReg}</td>
+                  <td className="py-4 px-4">{item.noOfBookings}</td>
+                  {/* <td className="py-4 px-4 text-[red]">{item.dueDate}</td> */}
+
                   <td className="py-4 px-4 m-auto ">
                     <span
                       className={statusStyles[item.Status] || "bg-gray-100"}
@@ -129,9 +202,7 @@ const DashboardTable = () => {
                       >
                         <EditIcon />
                       </div>
-                      <div onClick={() => setIsModalOpenDelete(true)}>
-                        <DeleteIcon />
-                      </div>
+
                       {openDropdownId === item.id && (
                         <div
                           ref={dropdownRef}
@@ -140,21 +211,15 @@ const DashboardTable = () => {
                           <ul className="py-1">
                             <li
                               className="px-4 py-3 hover:bg-gray-100 cursor-pointer"
-                              onClick={() => setIsModalOpen(true)}
+                              // onClick={() => setIsModalOpen(true)}
                             >
-                              View profile
+                              View Apartment Details
                             </li>
                             <li
                               className="px-4 py-3 hover:bg-gray-100 cursor-pointer"
-                              onClick={() => setIsModalOpenReset(true)}
+                              onClick={() => setIsModalOpenManagerProfile(true)}
                             >
-                              Reset User Password
-                            </li>
-                            <li
-                              className="px-4 py-3 hover:bg-gray-100 cursor-pointer"
-                              onClick={() => setIsModalOpenDeactivate(true)}
-                            >
-                              Deactivate Account
+                              View Manager Profile
                             </li>
                           </ul>
                         </div>
@@ -201,40 +266,33 @@ const DashboardTable = () => {
           </button>
         </div>
       </div>
-      <Modal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        title="Profile"
-        showCloseIcon={true}
-      >
-        <DashboardProfile />
-      </Modal>
-      <Modal
-        isOpen={isModalOpenReset}
-        onClose={() => setIsModalOpenReset(false)}
-        title="Reset User Password"
-        showCloseIcon={true}
-      >
-        <ResetPassword />
-      </Modal>
+
       <Modal
         isOpen={isModalOpenDelete}
         onClose={() => setIsModalOpenDelete(false)}
-        title="Delete Account"
+        title="Delete Properties"
         showCloseIcon={true}
       >
-        <DeleteProfile />
+        <DeleteProperties />
       </Modal>
       <Modal
-        isOpen={isModalOpenDeactivate}
-        onClose={() => setIsModalOpenDeactivate(false)}
-        title="Deactivate Account"
+        isOpen={isModalOpenDeactivateProperties}
+        onClose={() => setIsModalOpenDeactivateProperties(false)}
+        title="Deactivate Properties"
         showCloseIcon={true}
       >
-        <DeactivateAccount />
+        <DeactivateProperties />
+      </Modal>
+      <Modal
+        isOpen={isModalOpenManagerProfile}
+        onClose={() => setIsModalOpenManagerProfile(false)}
+        title="Manager Profile"
+        showCloseIcon={true}
+      >
+        <ManagerProfile />
       </Modal>
     </>
   );
 };
 
-export default DashboardTable;
+export default PropertiesTable;

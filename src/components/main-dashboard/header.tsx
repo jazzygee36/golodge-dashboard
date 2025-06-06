@@ -55,9 +55,11 @@ const Header = ({
         {title}
       </h3>
 
-      <div className="flex items-center gap-6 relative">
-        <HomeInput type={"text"} placeholder={"Search anything..."} height={'40px'} borderRadius="40px" border="1px #F6F5F5 solid" boxShadow="10px"/>
+      <div className="flex items-center gap-32 relative">
+        <div className="flex items-center gap-10 ">
+          <HomeInput type={"text"} placeholder={"Search anything..."} height={'40px'} borderRadius="40px" border="1px #F6F5F5 solid" boxShadow="10px"/>
         <NotificationIcon/>
+        </div>
         <div  className="flex items-center gap-3 cursor-pointer">
          <div>
            <h1 className='text-[14px] text-[#292D32] font-bold'>Lola </h1>

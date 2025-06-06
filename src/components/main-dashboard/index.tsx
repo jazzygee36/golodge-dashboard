@@ -9,8 +9,9 @@ const Links = [
   { name: 'Dashboard', path: '/dashbaord' },
   { name: 'User Management', path: '/user-management' },
   { name: 'Bookings', path: '/bookings' },
-  { name: 'Units', path: '/units' },
-  { name: 'Manager', path: '/managers' },
+  { name: 'Properties', path: '/properties' },
+  // { name: 'Manager', path: '/managers' },
+  { name: 'Renters', path: '/renters' },
   { name: 'Financial Records', path: '/financial-records' },
   { name: 'Settings', path: '/settings' },
 
@@ -26,7 +27,7 @@ const MainDashboard = ({ children }: dashboardProps) => {
   const title = currentLink?.name || 'Dashboard';
 
   return (
-    <div className='flex h-[100%]'>
+    <div className='flex h-full'>
       {/* Sidebar */}
       <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
 

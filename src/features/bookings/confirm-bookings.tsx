@@ -1,17 +1,17 @@
 import HomeButton from "@/components/button";
 import React from "react";
 
-const DeleteProfile = () => {
+const ConfirmBookings = () => {
   return (
     <div className="mt-7">
       <p className="text-[14px] text-[#050505]/[0.70] text-center">
-      You’re about to deactivate this user account. Are you sure you want to deactivate these account ?
+       You’re about to confirm this booking details. Are you sure you want to confirm this booking ?
       </p>
       <div className="gap-4 flex items-center justify-center mt-4">
         <HomeButton
-          title={"Delete"}
+          title={"Confirm"}
           type={"submit"}
-          bg={"#EF0808"}
+          bg={"#3F6FB9"}
           width={"129px"}
           height={"40px"}
           borderRadius="20px"
@@ -31,4 +31,4 @@ const DeleteProfile = () => {
   );
 };
 
-export default DeleteProfile;
+export default ConfirmBookings;
