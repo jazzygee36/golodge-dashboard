@@ -7,6 +7,7 @@ import DeleteProfile from "./delete";
 import HomeButton from "@/components/button";
 import ConfirmBookings from "./confirm-bookings";
 import DeleteBookings from "./delete";
+import SelectInput from "@/components/select-input";
 // import DashboardProfile from "./profile";
 // import ResetPassword from "./reset-password";
 
@@ -52,14 +53,29 @@ const statusStyles: Record<string, string> = {
   "Checked-Out":
     "bg-[#EF0808]/[0.20] text-[#292D32] border border-[#FFA500] rounded-lg  inline-block px-3 py-[5px] text-[10px]",
 };
+const options = [
+  { label: "All", value: "all" },
+  { label: "Checked-in", value: "checked-in" },
+  { label: "Checked-out", value: "checked-out" },
+];
 
 const BookingsTable = () => {
-
   const [isModalOpenDelete, setIsModalOpenDelete] = useState(false);
-  const [isModalOpenConfirmBookings, setIsModalOpenConfirmBookings] = useState(false);
+  const [isModalOpenConfirmBookings, setIsModalOpenConfirmBookings] =
+    useState(false);
   const [openDropdownId, setOpenDropdownId] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [filterValue, setFilterValue] = useState("all");
+
+  const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setFilterValue(e.target.value);
+  };
+
+  const filteredData = TableData.filter((item) => {
+    if (filterValue === "all") return true;
+    return item.Status.toLowerCase() === filterValue;
+  });
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -86,11 +102,26 @@ const BookingsTable = () => {
             <h1 className="text-[18px] font-medium text-[#151515]">Bookings</h1>
           </div>
           <h1 className="text-[#3F6FB9] text-[10px] underline cursor-pointer">
-            {selectedIds.length < 1 ? "Select" : <div onClick={() => setSelectedIds([])}>Unselect</div>}
+            {selectedIds.length < 1 ? (
+              "Select"
+            ) : (
+              <div onClick={() => setSelectedIds([])}>Unselect</div>
+            )}
           </h1>
         </div>
         <div className="flex justify-between items-center mb-2">
-          <span className="text-[8px] font-medium text-[#707070]">Sort by</span>
+          <div className="flex items-center gap-3  ">
+            <span className="text-[8px] font-medium text-[#707070]">
+              Sort by
+            </span>
+            <SelectInput
+              name={""}
+              id={""}
+              options={options}
+              value={filterValue}
+              onChange={handleFilterChange}
+            />
+          </div>
 
           {selectedIds.length > 0 && (
             <div className="flex gap-2">
@@ -115,7 +146,6 @@ const BookingsTable = () => {
                 border="1px solid  #F2F3F7"
                 borderRadius="20px"
                 onClick={() => setIsModalOpenDelete(true)}
-
               />
             </div>
           )}
@@ -139,7 +169,7 @@ const BookingsTable = () => {
               </tr>
             </thead>
             <tbody className="text-xs text-[#292D32] font-medium">
-              {TableData.map((item, index) => (
+              {filteredData.map((item, index) => (
                 <tr key={item.id} className="hover:bg-gray-100">
                   <td className="py-4 px-4">
                     <input
@@ -199,7 +229,6 @@ const BookingsTable = () => {
                             >
                               View Booking Details
                             </li>
-                           
                           </ul>
                         </div>
                       )}

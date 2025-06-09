@@ -7,6 +7,7 @@ import React, { useEffect, useState, useRef } from "react";
 import DeactivateAccount from "./deactivate";
 import DeleteProfile from "./delete";
 import HomeButton from "@/components/button";
+import SelectInput from "@/components/select-input";
 
 const originalData = [
   {
@@ -43,12 +44,28 @@ const statusStyles: Record<string, string> = {
     "bg-[#FFA500]/[0.20] text-[#292D32] border border-[#FFA500] rounded-lg  inline-block px-3 py-[5px] text-xs",
 };
 
+const options = [
+  { label: "All", value: "all" },
+  { label: "Active", value: "active" },
+  { label: "Non-Active", value: "non-active" },
+];
+
 const UserManagementTable = () => {
   const [isModalOpenDeactivate, setIsModalOpenDeactivate] = useState(false);
   const [isModalOpenDelete, setIsModalOpenDelete] = useState(false);
   const [openDropdownId, setOpenDropdownId] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [filterValue, setFilterValue] = useState("all");
+
+  const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setFilterValue(e.target.value);
+  };
+
+  const filteredData = TableData.filter((item) => {
+    if (filterValue === "all") return true;
+    return item.Status.toLowerCase() === filterValue;
+  });
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -77,11 +94,22 @@ const UserManagementTable = () => {
             </h1>
           </div>
           <h1 className="text-[#3F6FB9] text-[10px] underline cursor-pointer">
-            {selectedIds.length < 1 ? 'Select': (<div>Unselect</div>)}
+            {selectedIds.length < 1 ? "Select" : <div>Unselect</div>}
           </h1>
         </div>
         <div className="flex justify-between items-center mb-2">
-          <span className="text-[8px] font-medium text-[#707070]">Sort by</span>
+          <div className="flex items-center gap-3  ">
+            <span className="text-[8px] font-medium text-[#707070]">
+              Sort by
+            </span>
+            <SelectInput
+              name={""}
+              id={""}
+              options={options}
+              value={filterValue}
+              onChange={handleFilterChange}
+            />
+          </div>
 
           {selectedIds.length > 0 && (
             <div className="flex gap-2">
@@ -94,7 +122,7 @@ const UserManagementTable = () => {
                 border="1px solid #F2F3F7"
                 borderRadius="20px"
                 color="#292D32"
-                onClick={()=> setIsModalOpenDeactivate(true)}
+                onClick={() => setIsModalOpenDeactivate(true)}
               />
               <HomeButton
                 title={"Delete All"}
@@ -125,7 +153,7 @@ const UserManagementTable = () => {
               </tr>
             </thead>
             <tbody className="text-xs text-[#292D32] font-medium">
-              {TableData.map((item, index) => (
+              {filteredData.map((item, index) => (
                 <tr key={item.id} className="hover:bg-gray-100">
                   <td className="py-4 px-4">
                     <input
@@ -144,7 +172,7 @@ const UserManagementTable = () => {
                   </td>
                   <td className="py-4 px-4">{item.id}</td>
                   <td className="py-4 px-4">{item.userType}</td>
-                   <td className="py-4 px-4 flex gap-2 items-center">
+                  <td className="py-4 px-4 flex gap-2 items-center">
                     <div className="w-[20px] h-[20px] bg-[#EAEAEA] rounded-full"></div>
                     {item.name}
                   </td>

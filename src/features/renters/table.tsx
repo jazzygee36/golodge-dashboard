@@ -4,11 +4,11 @@ import EditIcon from "@/assets/svg/edit";
 import Modal from "@/components/modal";
 import React, { useEffect, useState, useRef } from "react";
 
-
 import HomeButton from "@/components/button";
 import DeactivateAccount from "./deactivate";
 import DeleteProfile from "./delete";
 import RentersProfile from "./renter-profile";
+import SelectInput from "@/components/select-input";
 
 const originalData = [
   {
@@ -17,7 +17,7 @@ const originalData = [
     name: "Linda Foreman",
     email: "Linda@mail.com",
     phoneNo: " 08034455444",
-    NoOfBookings:"2,345",
+    NoOfBookings: "2,345",
     dateOfReg: "22-05-2024",
     Status: "Active",
     action: "View",
@@ -28,7 +28,7 @@ const originalData = [
     name: "John Doe",
     email: "john@mail.com",
     phoneNo: " 08034455444",
-    NoOfBookings:"2,345",
+    NoOfBookings: "2,345",
     dateOfReg: "21-04-2024",
     Status: "Non-Active",
     action: "View",
@@ -49,6 +49,12 @@ const statusStyles: Record<string, string> = {
     "bg-[#FFA500]/[0.20] text-[#292D32] border border-[#FFA500] rounded-lg  inline-block px-3 py-[5px] text-xs",
 };
 
+const options = [
+  { label: "All", value: "all" },
+  { label: "Active", value: "active" },
+  { label: "Non-Active", value: "non-active" },
+];
+
 const RentersTable = () => {
   const [isModalOpenDeactivate, setIsModalOpenDeactivate] = useState(false);
   const [isModalOpenRenters, setIsModalOpenRenters] = useState(false);
@@ -56,6 +62,16 @@ const RentersTable = () => {
   const [openDropdownId, setOpenDropdownId] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [filterValue, setFilterValue] = useState("all");
+
+  const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setFilterValue(e.target.value);
+  };
+
+  const filteredData = TableData.filter((item) => {
+    if (filterValue === "all") return true;
+    return item.Status.toLowerCase() === filterValue;
+  });
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -79,16 +95,29 @@ const RentersTable = () => {
       <div className="bg-white px-5 py-4 my-[32px]">
         <div className="flex items-center justify-between mb-1">
           <div>
-            <h1 className="text-[18px] font-medium text-[#151515]">
-             Renters
-            </h1>
+            <h1 className="text-[18px] font-medium text-[#151515]">Renters</h1>
           </div>
           <h1 className="text-[#3F6FB9] text-[10px] underline cursor-pointer">
-            {selectedIds.length < 1 ? 'Select': (<div onClick={() =>setSelectedIds([]) }>Unselect</div>)}
+            {selectedIds.length < 1 ? (
+              "Select"
+            ) : (
+              <div onClick={() => setSelectedIds([])}>Unselect</div>
+            )}
           </h1>
         </div>
         <div className="flex justify-between items-center mb-2">
-          <span className="text-[8px] font-medium text-[#707070]">Sort by</span>
+          <div className="flex items-center gap-3  ">
+            <span className="text-[8px] font-medium text-[#707070]">
+              Sort by
+            </span>
+            <SelectInput
+              name={""}
+              id={""}
+              options={options}
+              value={filterValue}
+              onChange={handleFilterChange}
+            />
+          </div>
 
           {selectedIds.length > 0 && (
             <div className="flex gap-2">
@@ -134,7 +163,7 @@ const RentersTable = () => {
               </tr>
             </thead>
             <tbody className="text-xs text-[#292D32] font-medium">
-              {TableData.map((item, index) => (
+              {filteredData.map((item, index) => (
                 <tr key={item.id} className="hover:bg-gray-100">
                   <td className="py-4 px-4">
                     <input
@@ -157,7 +186,7 @@ const RentersTable = () => {
                     {item.name}
                   </td>
                   {/* <td className="py-4 px-4">{item.userType}</td> */}
-                   
+
                   <td className="py-4 px-4">
                     <p>{item.email}</p>
                     <span>{item.phoneNo}</span>
@@ -193,11 +222,11 @@ const RentersTable = () => {
                           className="absolute top-full mt-2 right-0 z-10 bg-white border border-gray-200 rounded shadow-md text-xs text-[#292D32] min-w-[207px]"
                         >
                           <ul className="py-1">
-                             <li
+                            <li
                               className="px-4 py-3 hover:bg-gray-100 cursor-pointer"
                               onClick={() => setIsModalOpenRenters(true)}
                             >
-                             View Profile
+                              View Profile
                             </li>
                             <li
                               className="px-4 py-3 hover:bg-gray-100 cursor-pointer"

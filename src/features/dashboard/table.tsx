@@ -7,6 +7,7 @@ import DashboardProfile from "./profile";
 import ResetPassword from "./reset-password";
 import DeleteProfile from "./delete";
 import DeactivateAccount from "./deactivate";
+import SelectInput from "@/components/select-input";
 
 const originalData = [
   {
@@ -43,6 +44,12 @@ const statusStyles: Record<string, string> = {
     "bg-[#FFA500]/[0.20] text-[#292D32] border border-[#FFA500] rounded-lg  inline-block px-3 py-[5px] text-xs",
 };
 
+const options = [
+  { label: "All", value: "all" },
+  { label: "Active", value: "active" },
+  { label: "Non-Active", value: "non-active" },
+];
+
 const DashboardTable = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpenReset, setIsModalOpenReset] = useState(false);
@@ -50,6 +57,17 @@ const DashboardTable = () => {
   const [isModalOpenDeactivate, setIsModalOpenDeactivate] = useState(false);
   const [openDropdownId, setOpenDropdownId] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
+  const [filterValue, setFilterValue] = useState("all");
+
+  const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setFilterValue(e.target.value);
+  };
+
+  const filteredData = TableData.filter((item) => {
+  if (filterValue === "all") return true;
+  return item.Status.toLowerCase() === filterValue;
+});
+
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -68,6 +86,7 @@ const DashboardTable = () => {
   const toggleDropdown = (id: string) => {
     setOpenDropdownId((prev: string | null) => (prev === id ? null : id));
   };
+
   return (
     <>
       <div className="bg-white px-5 py-4">
@@ -76,9 +95,18 @@ const DashboardTable = () => {
             <h1 className="text-[18px] font-medium text-[#151515]">
               All Registered Users
             </h1>
-            <span className="text-[8px] font-medium text-[#707070]">
-              Sort by
-            </span>
+            <div className="flex items-center gap-3  ">
+              <span className="text-[8px] font-medium text-[#707070]">
+                Sort by
+              </span>
+              <SelectInput
+                name={""}
+                id={""}
+                options={options}
+                value={filterValue}
+                onChange={handleFilterChange}
+              />
+            </div>
           </div>
           <h1 className="text-[#3F6FB9] text-[10px] underline cursor-pointer">
             See More
@@ -99,7 +127,7 @@ const DashboardTable = () => {
               </tr>
             </thead>
             <tbody className="text-xs text-[#292D32] font-medium">
-              {TableData.map((item, index) => (
+              {filteredData.map((item, index) => (
                 <tr key={item.id} className="hover:bg-gray-100">
                   <td className="py-4 px-4">
                     <input type="checkbox" />

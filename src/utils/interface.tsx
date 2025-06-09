@@ -36,3 +36,18 @@ export interface ButtonProps {
   borderRadius?:string;
   border?: string;
 }
+
+interface Option {
+  label: string;
+  value: string;
+}
+
+export interface SelectInputProps {
+  label?: string;
+  name: string;
+  id: string;
+  options: Option[];
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  className?: string;
+}
