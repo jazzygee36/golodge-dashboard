@@ -1,40 +1,29 @@
-'use client'
-import { useState } from 'react';
-import type { dashboardProps } from '../../utils/interface';
+'use client';
+import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import Sidebar from './sidebar';
 import Header from './header';
-import { usePathname, useRouter } from 'next/navigation';
 
-const Links = [
-  { name: 'Dashboard', path: '/dashbaord' },
-  { name: 'User Management', path: '/user-management' },
-  { name: 'Bookings', path: '/bookings' },
-  { name: 'Properties', path: '/properties' },
-  // { name: 'Manager', path: '/managers' },
-  { name: 'Renters', path: '/renters' },
-  { name: 'Financial Records', path: '/financial-records' },
-  { name: 'Settings', path: '/settings' },
 
-];
-
-const MainDashboard = ({ children }: dashboardProps) => {
+const MainDashboard = ({ children }: { children: React.ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const router = useRouter();
+  const pathname = usePathname();
 
-  const activePath =usePathname();
+  const title = Sidebar.Links.find(link => link.path === pathname)?.name || 'Dashboard';
 
-  const currentLink = Links.find((link) => link.path === activePath);
-  const title = currentLink?.name || 'Dashboard';
+  useEffect(() => {
+    if (isOpen) document.body.classList.add('overflow-hidden');
+    else document.body.classList.remove('overflow-hidden');
+    return () => document.body.classList.remove('overflow-hidden');
+  }, [isOpen]);
 
   return (
-    <div className='flex h-full'>
-      {/* Sidebar */}
+    <div className="flex h-screen overflow-hidden">
       <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
 
-      {/* Main Content */}
-      <div className='flex flex-col flex-1 mx-3 md:mx-[16px]'>
+      <div className="flex flex-col flex-1 overflow-y-auto mx-3 md:mx-4">
         <Header title={title} setIsOpen={setIsOpen} />
-        <div className=' h-full mt-7'>{children}</div>
+        <div className="mt-7">{children}</div>
       </div>
     </div>
   );

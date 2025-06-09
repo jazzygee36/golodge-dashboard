@@ -11,7 +11,7 @@ const DeactivateAccount = () => {
         <HomeButton
           title={"Deactivate"}
           type={"submit"}
-          bg={"green"}
+          bg={"#3F6FB9"}
           width={"129px"}
           height={"40px"}
           borderRadius="20px"

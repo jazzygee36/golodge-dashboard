@@ -94,6 +94,7 @@ const UserManagementTable = () => {
                 border="1px solid #F2F3F7"
                 borderRadius="20px"
                 color="#292D32"
+                onClick={()=> setIsModalOpenDeactivate(true)}
               />
               <HomeButton
                 title={"Delete All"}
@@ -104,6 +105,7 @@ const UserManagementTable = () => {
                 height={"32px"}
                 border="1px solid  #F2F3F7"
                 borderRadius="20px"
+                onClick={() => setIsModalOpenDelete(true)}
               />
             </div>
           )}

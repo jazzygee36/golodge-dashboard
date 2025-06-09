@@ -30,7 +30,7 @@ export default function RootLayout({
        style={{
           backgroundColor: "#F8FAFB",}}
       >
-        <MainDashboard title={""} >
+        <MainDashboard >
        <div className=""> {children}</div>
 
         </MainDashboard>
