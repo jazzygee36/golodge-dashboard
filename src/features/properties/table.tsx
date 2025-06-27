@@ -59,9 +59,9 @@ const statusStyles: Record<string, string> = {
   "Fully Booked":
     "bg-green-100 text-[#292D32] border border-green-300 rounded-lg inline-block px-3 py-[5px] text-[10px]",
   Vacant:
-    "bg-[#EF0808]/[0.20] text-[#292D32] border border-[#FFA500] rounded-lg  inline-block px-3 py-[5px] text-[10px]",
+    "bg-[#EF0808]/20 text-[#292D32] border border-[#FFA500] rounded-lg  inline-block px-3 py-[5px] text-[10px]",
   Available:
-    "bg-[#FFA500]/[0.20] text-[#292D32] border border-[#FFA500] rounded-lg  inline-block px-3 py-[5px] text-[10px]",
+    "bg-[#FFA500]/20 text-[#292D32] border border-[#FFA500] rounded-lg  inline-block px-3 py-[5px] text-[10px]",
 };
 
 const options = [

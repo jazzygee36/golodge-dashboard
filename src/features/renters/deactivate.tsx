@@ -4,7 +4,7 @@ import React from "react";
 const DeactivateAccount = () => {
   return (
     <div className="mt-7">
-      <p className="text-[14px] text-[#050505]/[0.70] text-center">
+      <p className="text-[14px] text-[#050505]/70 text-center">
        You’re about to deactivate these renters account. Are you sure you want to deactivate these accounts ?
       </p>
       <div className="gap-4 flex items-center justify-center mt-4">

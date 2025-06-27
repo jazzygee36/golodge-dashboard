@@ -4,7 +4,7 @@ import React from "react";
 const DeleteBookings = () => {
   return (
     <div className="mt-7">
-      <p className="text-[14px] text-[#050505]/[0.70] text-center">
+      <p className="text-[14px] text-[#050505]/70 text-center">
       You’re about to delete this bookings. Are you sure you want to delete these bookings ?
       </p>
       <div className="gap-4 flex items-center justify-center mt-4">
