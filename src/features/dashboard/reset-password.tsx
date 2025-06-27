@@ -4,7 +4,7 @@ import React from "react";
 const ResetPassword = () => {
   return (
     <div className="mt-7">
-      <p className="text-[14px] text-[#050505]/[0.70] text-center">
+      <p className="text-[14px] text-[#050505]/70 text-center">
         You’re about to reset this user password. Are you sure you want to reset
         these user password ?
       </p>

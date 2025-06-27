@@ -28,7 +28,7 @@ const HomeInput = ({
         onChange={onChange}
         onKeyPress={onKeyPress}
         readOnly={readOnly}
-        className={`${className}  w-full   ${border} rounded-md outline-none px-4 bg-[#F6F5F5] placeholder-[#98A9BC] placeholder:text-[14px] placeholder:font-[400]`}
+        className={`${className}  w-full   ${border} rounded-md outline-none px-4 bg-[#F6F5F5] placeholder-[#98A9BC] placeholder:text-[14px] placeholder:font-normal`}
         {...props}
         style={{ border: border, height: height, borderRadius: borderRadius, boxShadow:boxShadow}}
       />
