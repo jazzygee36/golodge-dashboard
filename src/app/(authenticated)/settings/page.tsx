@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 import { authClient } from "@/lib/auth-client";
 
@@ -8,11 +8,7 @@ const Settings = () => {
   const router = useRouter();
   const { mutate: signOut, isPending } = useMutation({
     mutationFn: async () => {
-      const {data, error} = await authClient.signOut({
-        query: {
-          callbackURL: "/auth",
-        }
-      });
+      const {data, error} = await authClient.signOut();
 
       if (error) throw new Error(error.message, { cause: error });
 
