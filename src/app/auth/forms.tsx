@@ -106,7 +106,6 @@ function LoginForm({
       return response;
     },
     onSuccess: (data) => {
-      console.log("Login successful:", data);
       // Handle successful login, e.g., redirect or show a success message
       alert("Login successful!");
       router.push("/");
