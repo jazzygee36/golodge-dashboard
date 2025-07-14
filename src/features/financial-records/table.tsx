@@ -45,7 +45,7 @@ const statusStyles: Record<string, string> = {
   Received:
     "bg-green-100 text-[#292D32] border border-green-300 rounded-lg inline-block px-3 py-[5px] text-xs",
   Pending:
-    "bg-[#FFA500]/[0.20] text-[#292D32] border border-[#FFA500] rounded-lg  inline-block px-3 py-[5px] text-xs",
+    "bg-[#FFA500]/20 text-[#292D32] border border-[#FFA500] rounded-lg  inline-block px-3 py-[5px] text-xs",
 };
 
 const options = [

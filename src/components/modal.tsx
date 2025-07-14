@@ -20,7 +20,7 @@ const Modal: React.FC<ModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      <div className="bg-white rounded-lg shadow-lg w-[100%] max-w-md relative p-6">
+      <div className="bg-white rounded-lg shadow-lg w-full max-w-md relative p-6">
         
         {showCloseIcon && (
           <button

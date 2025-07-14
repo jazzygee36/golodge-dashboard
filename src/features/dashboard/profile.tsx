@@ -9,7 +9,7 @@ const DashboardProfile = () => {
           <div className="w-[60px] h-[60px] bg-gray-400 rounded-full"></div>
           <div>
             <h2 className="text-[16px] "> John Doe</h2>
-            <p className="text-[12px] text-[#050505]/[0.70]">
+            <p className="text-[12px] text-[#050505]/70">
               +234 81697840000
             </p>
           </div>
@@ -41,11 +41,11 @@ const DashboardProfile = () => {
       <h3 className="text-[14px] my-4">User Information</h3>
       <div className="flex gap-10">
         <div className="flex gap-4">
-          <p className="text-[14px] text-[#050505]/[0.70]">
+          <p className="text-[14px] text-[#050505]/70">
             {" "}
             Name: <span className="text-[#050505] ">Lily Adams</span>
           </p>
-          <p className="text-[14px] text-[#050505]/[0.70]">
+          <p className="text-[14px] text-[#050505]/70">
             {" "}
             Mobile Number:{" "}
             <span className="text-[#050505] "> +122222222222</span>
@@ -54,11 +54,11 @@ const DashboardProfile = () => {
       </div>
       <div className="flex gap-10 my-4">
         <div className="flex gap-4">
-          <p className="text-[14px] text-[#050505]/[0.70]">
+          <p className="text-[14px] text-[#050505]/70">
             {" "}
             Email: <span className="text-[#050505] "> lindaforeman@mail.com</span>
           </p>
-          <p className="text-[14px] text-[#050505]/[0.70]">
+          <p className="text-[14px] text-[#050505]/70">
             {" "}
             Date Joined:   
             <span className="text-[#050505] "> 8 - 02 - 2025</span>
@@ -67,7 +67,7 @@ const DashboardProfile = () => {
       </div>
       <div className="flex gap-10 my-4">
         <div className="flex gap-4">
-          <p className="text-[14px] text-[#050505]/[0.70]">
+          <p className="text-[14px] text-[#050505]/70">
             {" "}
             Status: <span className="text-[#3F6FB9] "> Active</span>
           </p>

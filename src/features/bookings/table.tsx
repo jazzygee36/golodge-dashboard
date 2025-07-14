@@ -51,7 +51,7 @@ const statusStyles: Record<string, string> = {
   "Checked-In":
     "bg-green-100 text-[#292D32] border border-green-300 rounded-lg inline-block px-3 py-[5px] text-[10px]",
   "Checked-Out":
-    "bg-[#EF0808]/[0.20] text-[#292D32] border border-[#FFA500] rounded-lg  inline-block px-3 py-[5px] text-[10px]",
+    "bg-[#EF0808]/20 text-[#292D32] border border-[#FFA500] rounded-lg  inline-block px-3 py-[5px] text-[10px]",
 };
 const options = [
   { label: "All", value: "all" },

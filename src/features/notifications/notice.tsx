@@ -28,7 +28,7 @@ const Notice = () => {
           >
             <div className="flex items-center gap-3 w-[80%]">
               <div className="w-10 h-10  rounded-full flex p-2 items-center justify-center bg-[#5100A8]/[0.20] text-[#5100A8]">
-                <span className="text-gray-600 uppercase font-bold text-[#5100A8]">
+                <span className=" uppercase font-bold text-[#5100A8]">
                   {notification.name[0]} 
                 </span>
               </div>
