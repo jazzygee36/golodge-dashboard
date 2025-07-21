@@ -25,7 +25,7 @@ export default function Layout({
 
   if (error) {
     console.error("Error fetching session:", error);
-    return <div>Error loading session</div>;
+    return redirect("/auth");
   }
 
   if (!data) redirect("/auth");
