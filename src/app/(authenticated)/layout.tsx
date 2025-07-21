@@ -22,6 +22,7 @@ export default function Layout({
       headers: headersList,
     }
   }));
+  console.log('data', data)
 
   if (error) {
     console.error("Error fetching session:", error);

@@ -7,6 +7,7 @@ import { $fetch } from "@/lib/fetch";
 import { authClient } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
+import Toast from "@/components/toast";
 
 type FormState = "initial" | "login" | "register";
 type FormStateAction = Dispatch<SetStateAction<FormState>>;
@@ -74,7 +75,7 @@ function MainForm({
       />
       <button
         type="submit"
-        className="w-full bg-primary text-white py-2 rounded-lg"
+        className="w-full bg-primary text-white py-2 rounded-lg transition-all duration-300 ease-in-out hover:scale-105 active:scale-95"
         disabled={isCheckingEmail}
         style={{ cursor: isCheckingEmail ? "not-allowed" : "pointer" }}
       >
@@ -92,6 +93,8 @@ function LoginForm({
   email: string;
 }) {
   const router = useRouter();
+  const [showToast, setShowToast] = useState(false);
+
   const { mutate: loginUser, isPending } = useMutation({
     mutationFn: async (data: { email: string; password: string }) => {
       const { data: response, error } = await authClient.signIn.email({
@@ -106,9 +109,11 @@ function LoginForm({
       return response;
     },
     onSuccess: (data) => {
-      // Handle successful login, e.g., redirect or show a success message
-      alert("Login successful!");
-      router.push("/");
+      setShowToast(true);
+
+      setTimeout(() => {
+        router.push("/");
+      }, 2000); // wait 2 seconds
     },
     onError: (error: Error) => {
       console.error(error);
@@ -125,7 +130,7 @@ function LoginForm({
         const password = formData.get("password") as string;
 
         if (password.trim() === "") {
-          alert("Please enter your password.");
+          // alert("Please enter your password.");
           return;
         }
 
@@ -163,6 +168,13 @@ function LoginForm({
       >
         Use a different email
       </button>
+      {showToast && (
+        <Toast
+          message="Login Successful! Redirecting..."
+          type="success"
+          onClose={() => setShowToast(false)}
+        />
+      )}
     </form>
   );
 }
@@ -174,6 +186,7 @@ function RegisterationForm({
   setFormState: FormStateAction;
   email: string;
 }) {
+  const [showToast, setShowToast] = useState(false);
   const { mutate: registerUser, isPending } = useMutation({
     mutationFn: async (data: {
       email: string;
@@ -193,9 +206,16 @@ function RegisterationForm({
       return response;
     },
 
-    onSuccess: () => {
-      alert("Registration successful! Please log in.");
-      setFormState("login");
+    // onSuccess: () => {
+    //   setShowToast(true);
+    //   setFormState("login");
+    // },
+    onSuccess: (data) => {
+      setShowToast(true);
+
+      setTimeout(() => {
+        setFormState("login");
+      }, 2000); // wait 2 seconds
     },
 
     onError: (error: Error) => {
@@ -244,7 +264,7 @@ function RegisterationForm({
       <button
         type="submit"
         className={cn(
-          "w-full bg-primary text-white py-2 rounded-lg",
+          "w-full bg-primary text-white py-2 rounded-lg transition-all duration-300 ease-in-out hover:scale-105 active:scale-95",
           isPending ? "bg-primary/80 cursor-not-allowed" : ""
         )}
         disabled={isPending}
@@ -258,6 +278,13 @@ function RegisterationForm({
       >
         Use a different email
       </button>
+      {showToast && (
+        <Toast
+          message="Registration successful! Redirecting..."
+          type="success"
+          onClose={() => setShowToast(false)}
+        />
+      )}
     </form>
   );
 }

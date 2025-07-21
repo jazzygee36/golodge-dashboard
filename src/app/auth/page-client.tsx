@@ -9,9 +9,7 @@ export default function SignIn() {
   const { form, formState } = useAuthForm();
 
   return (
-    <div
-      className="min-h-screen flex flex-col items-center md:justify-center px-4 pt-8 bg-white"
-    >
+    <div className="min-h-screen flex flex-col items-center md:justify-center px-4 pt-8 bg-white">
       <div className="w-full max-w-md space-y-6">
         {/* Title and Subtitle Section */}
         <div className="text-center space-y-2">
@@ -32,9 +30,7 @@ export default function SignIn() {
         </div>
 
         {/* Auth Form Section */}
-        <div>
-          {form()}
-        </div>
+        <div>{form()}</div>
 
         {/* Separator and Social Login Options (only for initial state) */}
         {formState === "initial" && (
@@ -54,7 +50,7 @@ export default function SignIn() {
               {["facebook", "apple", "google"].map((provider) => (
                 <button
                   key={provider}
-                  className="p-2 border border-gray-300 rounded-lg hover:border-gray-400 active:scale-98 transition-all duration-200"
+                  className="p-2 border border-gray-300 rounded-lg hover:border-gray-400 active:scale-98 transition-all duration-200 transition-all duration-300 ease-in-out hover:scale-105 active:scale-95"
                 >
                   <Image
                     src={`/${provider}.svg`}
