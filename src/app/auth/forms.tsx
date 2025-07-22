@@ -31,6 +31,8 @@ function MainForm({
       }>("/auth/check-email", {
         body: { email },
       });
+        console.log('data', data)
+
 
       if (error) {
         throw new Error(error.message);
@@ -46,6 +48,7 @@ function MainForm({
         setFormState("register");
       }
     },
+    
 
     onError: (error: Error) => {
       alert(`Error checking email: ${error.message}`);
