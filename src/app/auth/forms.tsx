@@ -31,8 +31,6 @@ function MainForm({
       }>("/auth/check-email", {
         body: { email },
       });
-        console.log('data', data)
-
 
       if (error) {
         throw new Error(error.message);
@@ -48,10 +46,10 @@ function MainForm({
         setFormState("register");
       }
     },
-    
 
     onError: (error: Error) => {
       alert(`Error checking email: ${error.message}`);
+
       // Optionally, you can show an error message to the user
     },
   });
@@ -157,7 +155,7 @@ function LoginForm({
       <button
         type="submit"
         className={cn(
-          "w-full bg-primary text-white py-2 rounded-lg",
+          "w-full bg-primary text-white py-2 rounded-lg transition-all duration-300 ease-in-out hover:scale-105 active:scale-95",
           isPending ? "bg-primary/80 cursor-not-allowed" : ""
         )}
         disabled={isPending}
@@ -167,7 +165,7 @@ function LoginForm({
       <button
         type="button"
         onClick={() => setFormState("initial")}
-        className="w-full text-primary text-sm"
+        className="w-full text-primary text-sm cursor-pointer hover:underline"
       >
         Use a different email
       </button>

@@ -49,8 +49,11 @@ const options = [
   { label: "Active", value: "active" },
   { label: "Non-Active", value: "non-active" },
 ];
+interface Users {
+  users: any[]
+}
 
-const DashboardTable = () => {
+const DashboardTable = ({users}: Users) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpenReset, setIsModalOpenReset] = useState(false);
   const [isModalOpenDelete, setIsModalOpenDelete] = useState(false);
@@ -63,7 +66,7 @@ const DashboardTable = () => {
     setFilterValue(e.target.value);
   };
 
-  const filteredData = TableData.filter((item) => {
+  const filteredData = users.filter((item) => {
   if (filterValue === "all") return true;
   return item.Status.toLowerCase() === filterValue;
 });
@@ -127,31 +130,31 @@ const DashboardTable = () => {
               </tr>
             </thead>
             <tbody className="text-xs text-[#292D32] font-medium">
-              {filteredData.map((item, index) => (
-                <tr key={item.id} className="hover:bg-gray-100">
+              {filteredData.map((user) => (
+                <tr key={user.id} className="hover:bg-gray-100">
                   <td className="py-4 px-4">
                     <input type="checkbox" />
                   </td>
-                  <td className="py-4 px-4">{item.id}</td>
-                  <td className="py-4 px-4">{item.userType}</td>
+                  <td className="py-4 px-4">{user.id}</td>
+                  <td className="py-4 px-4">{user.userType}</td>
                   <td className="py-4 px-4 flex gap-2 items-center">
                     <div className="w-[20px] h-[20px] bg-[#EAEAEA] rounded-full"></div>
-                    {item.name}
+                    {user.name}
                   </td>
-                  <td className="py-4 px-4">{item.email}</td>
-                  <td className="py-4 px-4">{item.dateOfReg}</td>
+                  <td className="py-4 px-4">{user.email}</td>
+                  <td className="py-4 px-4">{user.dateOfReg}</td>
                   <td className="py-4 px-4 m-auto ">
                     <span
-                      className={statusStyles[item.Status] || "bg-gray-100"}
+                      className={statusStyles[user.Status] || "bg-gray-100"}
                     >
-                      {item.Status}
+                      {user.Status}
                     </span>
                   </td>
                   <td className="py-4 px-4">
                     <div className="relative flex gap-4 items-center text-blue-500 underline">
                       <div
                         onClick={() => {
-                          toggleDropdown(item.id);
+                          toggleDropdown(user.id);
                         }}
                         className="cursor-pointer"
                       >
@@ -160,7 +163,7 @@ const DashboardTable = () => {
                       <div onClick={() => setIsModalOpenDelete(true)}>
                         <DeleteIcon />
                       </div>
-                      {openDropdownId === item.id && (
+                      {openDropdownId === user.id && (
                         <div
                           ref={dropdownRef}
                           className="absolute top-full mt-2 right-0 z-10 bg-white border border-gray-200 rounded shadow-md text-xs text-[#292D32] min-w-[207px]"

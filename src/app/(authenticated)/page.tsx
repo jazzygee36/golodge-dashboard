@@ -1,42 +1,91 @@
+"use client";
 import CardArrow from "@/assets/svg/cardArrow";
 import HomeButton from "@/components/button";
 import DashboardTable from "@/features/dashboard/table";
-import React from "react";
+import { getAllUsers } from "@/lib/users/all-users";
+import { useEffect, useState } from "react";
 
-const CardDetails = [
-  {
-    propertyDetails: " No of Properties",
-    amount: "34,000",
-    percentage: "+32.6%",
-    month: "than last month",
-  },
-  {
-    propertyDetails: " No of Apartment Renters",
-    amount: "4,500",
-    percentage: "+32.6%",
-    month: "than last month",
-  },
-  {
-    propertyDetails: "No of Bookings",
-    amount: "56,840",
-    percentage: "+32.6%",
-    month: "than last month",
-  },
-  {
-    propertyDetails: " Total Users",
-    amount: "6,500",
-    percentage: "+32.6%",
-    month: "than last month",
-  },
-  {
-    propertyDetails: " Total Earnings",
-    amount: "$650k",
-    percentage: "+32.6%",
-    month: "than last month",
-  },
-];
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  Status: string;
+  dateOfReg: string;
+  userType: string;
+  action: string;
+  role?: string;
+}
 
 const Dashbaord = () => {
+  const [users, setUsers] = useState<User[]>([]);
+  console.log('users',users)
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const rawUsers = await getAllUsers();
+
+        const mappedUsers = (rawUsers ?? []).map((user: any) => ({
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          userType: "Property Account", // default or fetched
+          dateOfReg: new Date(user.createdAt).toLocaleDateString(), // format
+          Status: "Active", // fallback or actual user.status
+          action: "View",
+        }));
+
+        setUsers(mappedUsers);
+      } catch (err) {
+        console.error("Failed to load users", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUsers();
+  }, []);
+
+  const CardDetails = [
+    {
+      propertyDetails: " No of Properties",
+      amount: "34,000",
+      percentage: "+32.6%",
+      month: "than last month",
+    },
+    {
+      propertyDetails: " No of Apartment Renters",
+      amount: "4,500",
+      percentage: "+32.6%",
+      month: "than last month",
+    },
+    {
+      propertyDetails: "No of Bookings",
+      amount: "56,840",
+      percentage: "+32.6%",
+      month: "than last month",
+    },
+    {
+      propertyDetails: " Total Users",
+      amount: users.length.toLocaleString(), // ✅ safely display count
+      percentage: "+32.6%",
+      month: "than last month",
+    },
+    {
+      propertyDetails: " Total Earnings",
+      amount: "$650k",
+      percentage: "+32.6%",
+      month: "than last month",
+    },
+  ];
+
+  if (loading)
+    return (
+      <div className="flex items-center justify-center h-screen w-full">
+        <p className="text-lg font-medium text-gray-600">Loading users...</p>
+      </div>
+    );
   return (
     <div>
       <div className="flex items-center justify-between">
@@ -68,7 +117,7 @@ const Dashbaord = () => {
                     index === 3 || index === 4
                       ? "text-red-500"
                       : "text-[#3F6FB9]"
-                  } ${index === 2 && "text-[#007344]"}` }
+                  } ${index === 2 && "text-[#007344]"}`}
                 >
                   {item.percentage}{" "}
                 </p>
@@ -81,7 +130,7 @@ const Dashbaord = () => {
           </div>
         ))}
       </div>
-      <DashboardTable />
+      <DashboardTable users={users} />
     </div>
   );
 };
